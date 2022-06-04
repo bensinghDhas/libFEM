@@ -4,7 +4,7 @@
 #include <vector>
 #include <math.h>
 #include <iostream>
-#include "C_FEM_GaussPoint_1D"
+#include "C_FEM_GaussPoint_1D.h"
 
 class C_GaussPoint_2D_QUAD:
 {
