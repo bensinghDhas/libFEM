@@ -52,15 +52,18 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
 
     // Create the connectivity for the quadrilateral
     num_El=noX*noY;
+    int row=0;
     std::vector<int> tmp;
-    for (int i=0; i<noX; i++)
+    for (int j=1; j<noY; j++)
     {
-        for (int j=1; j<noY; j++)
+        for (int i=0; i<noX; i++)
         {
-            tmp={i, i+1, (noY*j)+i+1,  (noY*j)+i};
+
+            tmp={row+i, row+i+1, (noY*j)+i+1,  (noY*j)+i};
             elements.push_back(tmp);
         }
-    }
+        row+=noX;
+    }   
 }
 
 #endif
