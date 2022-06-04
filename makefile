@@ -1,5 +1,9 @@
 eigenPath= $(CURDIR)/
 incPath= $(CURDIR)/inc/
+quad:
+	g++ -std=c++17 -g -c mainLaplaceQuad.cpp -I$(eigenPath) -I$(incPath)
+	g++ -std=c++17 -o main.exe mainLaplaceQuad.o
+	./main.exe
 cst:
 	g++ -std=c++17 -g -c mainLaplaceCST.cpp -I$(eigenPath) -I$(incPath)
 	g++ -std=c++17 -o main.exe mainLaplaceCST.o
