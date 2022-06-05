@@ -25,7 +25,8 @@ class C_Mesh{
 class C_Mesh2D: public C_Mesh
 {
     public:
-        void meshRectangle(std::vector<double>,std::vector<double>,int, int);
+        void meshRectangle(std::vector<double>,std::vector<double>, int, int);
+        std::vector<std::vector<double>> getElNodes(int);
 };
 
 void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim, int noX, int noY)
@@ -64,6 +65,16 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
         }
         row+=noX;
     }   
+}
+
+std::vector<std::vector<double>> C_Mesh2D::getElNodes(int itEl)
+{
+    std::vector<std::vector<double>> elNodes;
+    for (auto node:elements[itEl])
+    {
+        elNodes.push_back(nodes[node]);
+    }
+    return elNodes;
 }
 
 #endif

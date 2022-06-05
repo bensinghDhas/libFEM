@@ -1,3 +1,6 @@
+#ifndef C_GAUSSDATA_H
+#define C_GAUSSDATA_H
+
 #include <vector>
 #include <math.h>
 #include <iostream>
@@ -63,3 +66,4 @@ class C_GaussData2DQuad: public C_GaussData{
             }
         }
 };
+#endif
