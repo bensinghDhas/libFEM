@@ -15,12 +15,14 @@ int main()
 {
     C_GaussData2DQuad gpData(2);
     C_Mesh2D mesh;
-    mesh.meshRectangle({0,1},{0,1},10,10);
+    mesh.meshRectangle({0,1},{0,1},2,2);
     C_Matrix_Sparse kGlob;
     C_QuadrilateralBasis feL(1, gpData);
     int itEl=0;
+ 
     for (const auto& elCon: mesh.elements)
     {
+        std::cout<< itEl;
         std::vector<std::vector<double>> elNodes=mesh.getElNodes(itEl);
         stiffnessLaplace(elNodes, elCon, kGlob, feL, gpData);
         itEl++;

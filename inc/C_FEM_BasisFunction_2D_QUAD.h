@@ -71,7 +71,7 @@ class C_QuadrilateralBasis
     {   
         return (this->spR)[itGp];
     }
-    C_Matrix_Dense& getDerShapeFunction(int itGp, const std::vector<std::vector<double>>& elNodes)
+    C_Matrix_Dense& getDerShapeFunction(int itGp, const std::vector<std::vector<double>>& elNodes, double& j)
     {
         C_Matrix_Dense elNodesMat(4,2);
         C_Matrix_Dense jac(2,2), invJac(2,2);
@@ -84,7 +84,7 @@ class C_QuadrilateralBasis
         
         jac=dspR[itGp]*elNodesMat;
 
-        double j = jac(0,0)*jac(1,1) - jac(0,1)*jac(1,0);
+        j = jac(0,0)*jac(1,1) - jac(0,1)*jac(1,0);
         invJac(0,0) = jac(1,1);
         invJac(0,1) = -1*jac(0,1);
         invJac(1,0) = -1*jac(1,0);
