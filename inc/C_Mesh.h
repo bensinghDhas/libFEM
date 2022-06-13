@@ -39,10 +39,10 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
     num_Nd=0;
 
     // Create the nodes in the rectangular mesh
-    for (int i=0; i<=noX; i++)
+    for (int i=0; i<noX; i++)
     {
         y=ylim[0];
-        for (int j=0; j<=noY; j++)
+        for (int j=0; j<noY; j++)
         {
             nodes.push_back({x,y});
             y+=dy;
@@ -52,19 +52,18 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
     }
 
     // Create the connectivity for the quadrilateral
-    num_El=noX*noY;
     int row=0;
     std::vector<int> tmp;
     for (int j=1; j<noY; j++)
     {
-        for (int i=0; i<noX; i++)
+        for (int i=0; i<(noX-1); i++)
         {
-
-            tmp={row+i, row+i+1, (noY*j)+i+1,  (noY*j)+i};
+            tmp={row+i, row+i+1, (row+noX)+i+1,  (row+noX)+i};
             elements.push_back(tmp);
         }
         row+=noX;
-    }   
+    }
+    num_El=elements.size();   
 }
 
 std::vector<std::vector<double>> C_Mesh2D::getElNodes(int itEl)
