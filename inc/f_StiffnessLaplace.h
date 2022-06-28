@@ -11,5 +11,5 @@ void stiffnessLaplace(const std::vector<std::vector<double>>& elNodes, const std
         JxW=jac*gpData.wt[itGp];
         ke+=JxW*(dsp.T()*dsp);
     }
-    std::cout<< ke;
+    kGlob.add_matr(ke, elCon, elCon);
 }
