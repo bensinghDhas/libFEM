@@ -32,35 +32,30 @@ int main()
         itNd++;
     }
 
-    std::cout << "Nodes\n";
-    for (auto el : mesh.nodes)
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            std::cout << el[i] << ' ';
-        }
-        std::cout << '\n';
-    }
-    std::cout << "Elements\n";
-    for (auto el : mesh.elements)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            std::cout << el[i] << ' ';
-        }
-        std::cout << '\n';
-    }
+    // std::cout << "Nodes\n";
+    // for (auto el : mesh.nodes) {
+    //     for (int i = 0; i < 2; i++) {
+    //         std::cout << el[i] << ' ';
+    //     }
+    //     std::cout << '\n';
+    // }
+    // std::cout << "Elements\n";
+    // for (auto el : mesh.elements) {
+    //     for (int i = 0; i < 4; i++) {
+    //         std::cout << el[i] << ' ';
+    //     }
+    //     std::cout << '\n';
+    // }
 
     C_Matrix_Sparse kGlob;
     C_QuadrilateralBasis feL(1, gpData);
     int itEl = 0;
 
-    for (const auto &elCon : mesh.elements)
-    {
-        std::cout << itEl;
+    for (const auto &elCon : mesh.elements) {
+        // std::cout << itEl;
         std::vector<std::vector<double>> elNodes = mesh.getElNodes(itEl);
         stiffnessLaplace(elNodes, elCon, kGlob, feL, gpData);
-        itEl++;
+        // itEl++;
     }
     Eigen::VectorXd fGlob(mesh.num_Nd);
     for (int i=0; i<mesh.num_Nd; i++){
@@ -83,6 +78,8 @@ int main()
     convert_to_Eigen(kGlob, kG_eigen);
     Eigen::SimplicialLDLT< Eigen::SparseMatrix<double> > chol;
     chol.compute(kG_eigen);
+    std::cout << ' '<<std::endl;
+    // std::cout << ' '<<std::endl;
     Eigen::VectorXd sol = chol.solve(fGlob);
     std::cout<< sol;
     return 0;

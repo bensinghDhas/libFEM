@@ -33,8 +33,8 @@ void C_Mesh2D::meshRectangle(std::vector<double> xlim, std::vector<double> ylim,
 {
     double x,y;
     double dx, dy;
-    dx=(xlim[1]-xlim[0])/noX;
-    dy=(ylim[1]-ylim[0])/noY;
+    dx=(xlim[1]-xlim[0])/(noX-1);
+    dy=(ylim[1]-ylim[0])/(noY-1);
     x=xlim[0];
     num_Nd=0;
 
