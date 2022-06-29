@@ -14,20 +14,31 @@ int main()
 {
     C_GaussData2DQuad gpData(2);
     C_Mesh2D mesh;
-    mesh.meshRectangle({0, 1}, {0, 1}, 3, 3);
-    std::vector<int> leftNodes;
-    std::vector<int> rightNodes;
+    mesh.meshRectangle({0, 1}, {0, 1}, 10, 10);
+    std::vector<int> bcNodes;
 
     int itNd = 0;
     for (auto nd : mesh.nodes)
     {
+        // Left nodes
         if (abs(nd[0]) < 0.000001)
         {
-            leftNodes.push_back(itNd);
+            bcNodes.push_back(itNd);
         }
+        // Right nodes
         if (abs(nd[0]) > 0.999999)
         {
-            rightNodes.push_back(itNd);
+            bcNodes.push_back(itNd);
+        }
+        // Top nodes
+        if (abs(nd[1]) > 0.999999)
+        {
+            bcNodes.push_back(itNd);
+        }
+        // Bottom nodes
+        if (abs(nd[1]) < 0.0000001)
+        {
+            bcNodes.push_back(itNd);
         }
         itNd++;
     }
@@ -61,16 +72,10 @@ int main()
     for (int i=0; i<mesh.num_Nd; i++){
         fGlob(i)=1.0;
     }
-    for (auto nd : leftNodes) {
+    for (auto nd : bcNodes) {
         kGlob.row_NonSparseAssign(0.0, nd);
         kGlob.col_NonSparseAssign(0.0, nd);
         kGlob(nd, nd) = 1;
-        fGlob(nd)=0;
-    }
-    for (auto nd: rightNodes) {
-        kGlob.col_NonSparseAssign(0.0, nd);
-        kGlob.row_NonSparseAssign(0.0, nd);
-        kGlob(nd,nd) = 1;
         fGlob(nd)=0;
     }
 
@@ -78,8 +83,6 @@ int main()
     convert_to_Eigen(kGlob, kG_eigen);
     Eigen::SimplicialLDLT< Eigen::SparseMatrix<double> > chol;
     chol.compute(kG_eigen);
-    std::cout << ' '<<std::endl;
-    // std::cout << ' '<<std::endl;
     Eigen::VectorXd sol = chol.solve(fGlob);
     std::cout<< sol;
     return 0;
